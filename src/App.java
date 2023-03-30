@@ -32,7 +32,11 @@ public class App {
             System.out.println();
 
             InputStream urlInputStream = new URL(map.get("image")).openStream();
-            stickerGenerator.create(urlInputStream,"resources/assets/"+map.get("title")+".png", "ImDb: "+map.get("imDbRating"));
+            stickerGenerator.create(urlInputStream,
+                            "resources/assets/output/"+map.get("title")+".png", 
+                            "ImDb: "+map.get("imDbRating"),
+                            map.get("imDbRating")
+                            );
         }
     }
 }
