@@ -8,12 +8,45 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 public class stickerGenerator {
-    public void create(InputStream inputStream, String fileName, String text, String ImdbRate) throws Exception{
 
+    public final static int[][] colors = {
+        {29,15,11},
+        {78, 58, 23}, 
+        {60,60,60}, 
+        {89,60,15},
+        {14, 59, 75} 
+    };
+
+    public static final font[] fonts = {
+        new font(new File("resources/assets/fonts/impact.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/BADABB.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Bouncy_Thin.otf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Hey_Comic.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Janda_Manatee.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Tiktok.otf"), Font.TRUETYPE_FONT)
+    };
+
+    public static String[] messages = {
+        "Recomendadissimo",
+        "Excelente",
+        "Exceptionnel",
+        "Muito bom",
+        "100 palavras",
+        "Obra prima",
+        "Topzera",
+        "Apenas assista"
+    };
+
+    public void create(InputStream inputStream, String fileName, String text, String ImdbRate) throws Exception{
+        //Randomiza a fonte e a mensagem da descrição
+        Random rand = new Random();
+        int FontSelected = rand.nextInt(stickerGenerator.fonts.length);
+        int TextSelected = rand.nextInt(stickerGenerator.messages.length);
         //carrega a imagem
         BufferedImage img = ImageIO.read(inputStream);
 
@@ -37,7 +70,7 @@ public class stickerGenerator {
 
         //carrega a fonte Impact
         try {
-            Font impact = Font.createFont(Font.TRUETYPE_FONT, new File("resources/assets/fonts/impact.ttf")).deriveFont((Float)(FontSize*1.0f));
+            Font impact = Font.createFont(fonts[0].getType(), fonts[0].getFile()).deriveFont((Float)(FontSize*1.0f));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(impact);
             graphics.setFont(impact);
@@ -57,6 +90,18 @@ public class stickerGenerator {
 
         //adiciona o texto
         graphics.drawString(ImdbRate, positionTextX,positionTextY);
+        try {
+            Font bottomTextFont = Font.createFont(fonts[FontSelected].getType(), fonts[FontSelected].getFile()).deriveFont((float) FontSize);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(bottomTextFont);
+            graphics.setFont(bottomTextFont);
+        } catch (Exception e) {
+            graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, FontSize));
+        }
+        
+        int fontWidthBottom = fontMetrics.stringWidth(stickerGenerator.messages[TextSelected]);
+
+        graphics.drawString(stickerGenerator.messages[TextSelected], (width - fontWidthBottom)/2, (int)(newHeight - FontSize/2) + 10); 
 
         //salva a imagem
         ImageIO.write(newImg, "png", new File(fileName.replaceAll("[^\\w\\.@/-]", "_")));
@@ -68,18 +113,9 @@ public class stickerGenerator {
     
     private BufferedImage assessment(int width, float imdbRate) throws IOException{
 
-        int[][] colors = {
-                {29,15,11},
-                {78, 58, 23}, 
-                {60,60,60}, 
-                {89,60,15},
-                {14, 59, 75} 
-                };
-
         int ranking = stickerGenerator.BooleanToInt(imdbRate > 2.0f) + stickerGenerator.BooleanToInt(imdbRate > 4.0f) + stickerGenerator.BooleanToInt(imdbRate > 6.0f) + stickerGenerator.BooleanToInt(imdbRate > 8.0f);
         System.out.println(ranking);
 
-        // BufferedImage img = ImageIO.read(new File("resources/assets/mutable.png"));
         BufferedImage mutable = ImageIO.read(new File("resources/assets/mutable.png"));
         BufferedImage white = ImageIO.read(new File("resources/assets/white.png"));
         BufferedImage shadow = ImageIO.read(new File("resources/assets/shadow.png"));
@@ -92,7 +128,7 @@ public class stickerGenerator {
                 int green = (pixel>>8)&0xff;
                 int blue = pixel&0xff;
                 
-                pixel = (alpha<<24) | (colors[ranking][0]*red/100<<16) | (colors[ranking][1]*green/100<<8) | (colors[ranking][2]*blue/100);
+                pixel = (alpha<<24) | (stickerGenerator.colors[ranking][0]*red/100<<16) | (stickerGenerator.colors[ranking][1]*green/100<<8) | (stickerGenerator.colors[ranking][2]*blue/100);
                 mutable.setRGB(x, y, pixel);
             }
         }
