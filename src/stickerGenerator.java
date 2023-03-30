@@ -12,6 +12,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import toolkit.font;
+
 public class stickerGenerator {
 
     public final static int[][] colors = {
@@ -24,22 +26,22 @@ public class stickerGenerator {
 
     public static final font[] fonts = {
         new font(new File("resources/assets/fonts/impact.ttf"), Font.TRUETYPE_FONT),
-        new font(new File("resources/assets/fonts/BADABB.ttf"), Font.TRUETYPE_FONT),
-        new font(new File("resources/assets/fonts/Bouncy_Thin.otf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Bing_Bam_Boum.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/orange_juice.ttf"), Font.TRUETYPE_FONT),
         new font(new File("resources/assets/fonts/Hey_Comic.ttf"), Font.TRUETYPE_FONT),
-        new font(new File("resources/assets/fonts/Janda_Manatee.ttf"), Font.TRUETYPE_FONT),
-        new font(new File("resources/assets/fonts/Tiktok.otf"), Font.TRUETYPE_FONT)
+        new font(new File("resources/assets/fonts/Take_Coffee.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Glossy_Sheen_Shine.ttf"), Font.TRUETYPE_FONT),
+        new font(new File("resources/assets/fonts/Janda_Manatee.ttf"), Font.TRUETYPE_FONT)
     };
 
     public static String[] messages = {
-        "Recomendadissimo",
+        "So vai",
         "Excelente",
         "Exceptionnel",
         "Muito bom",
-        "100 palavras",
+        "Sem palavras",
         "Obra prima",
-        "Topzera",
-        "Apenas assista"
+        "Topzera"
     };
 
     public void create(InputStream inputStream, String fileName, String text, String ImdbRate) throws Exception{
