@@ -15,6 +15,6 @@ public class Language {
 
     @Id
     private String id;
-    private String title;
-    private String image;
+    private String title; 
+    private String image; 
 }
