@@ -18,7 +18,7 @@ public class LanguageController {
 
     @GetMapping("/language/all")
     public List<Language> getAll(){
-        return repository.findAll();
+        return repository.findAll(); 
     }
 
     @PostMapping("/language")
