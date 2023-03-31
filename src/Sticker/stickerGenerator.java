@@ -27,7 +27,7 @@ public class stickerGenerator {
         new font(new File("resources/assets/fonts/Janda_Manatee.ttf"), Font.TRUETYPE_FONT, 28)
     };
 
-    public static String[] messages = {
+    private static String[] messages = {
         "So vai",
         "Excelente",
         "Exceptionnel",
@@ -40,7 +40,8 @@ public class stickerGenerator {
     public void create(InputStream inputStream, String fileName) throws Exception{
         //Randomiza a fonte e a mensagem da descrição
         Random rand = new Random();
-        int TextSelected = rand.nextInt(stickerGenerator.messages.length);
+        int TextSelected = rand.nextInt(messages.length);
+        int FontSelected = rand.nextInt(fonts.length);
         //carrega a imagem
         BufferedImage img = ImageIO.read(inputStream);
 
@@ -57,7 +58,7 @@ public class stickerGenerator {
 
         //adiciona o sticker com o texto
         int widthSticker = width*250/674;
-        graphics.drawImage(stickerGenerator.assessment(widthSticker, stickerGenerator.messages[TextSelected],6), width - widthSticker, 0, null);
+        graphics.drawImage(stickerGenerator.assessment(widthSticker, stickerGenerator.messages[TextSelected],FontSelected), width - widthSticker, 0, null);
         //salva a imagem
         ImageIO.write(newImg, "png", new File(fileName.replaceAll("[^\\w\\.@/-]", "_")));
     }
