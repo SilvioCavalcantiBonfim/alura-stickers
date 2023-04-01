@@ -4,7 +4,7 @@
 ![java](https://img.shields.io/badge/-Spring_Boot-%23181717?style=for-the-badge&logo=Spring-Boot)
 ![maven](https://img.shields.io/badge/-Maven-%23181717?style=for-the-badge&logo=Apache-Maven)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-%23181717?style=for-the-badge&logo=MongoDB)
-![MongoDB](https://img.shields.io/badge/-Visual_Studio_Code-%23181717?style=for-the-badge&logo=Visual-Studio-Code)
+![VSCODE](https://img.shields.io/badge/-Visual_Studio_Code-%23181717?style=for-the-badge&logo=Visual-Studio-Code)
 
 
 ## Resumo
