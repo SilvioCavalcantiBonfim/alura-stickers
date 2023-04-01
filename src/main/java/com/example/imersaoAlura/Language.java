@@ -19,4 +19,5 @@ public class Language {
     private String id;
     private String title; 
     private String image; 
+    private int ranking;
 }

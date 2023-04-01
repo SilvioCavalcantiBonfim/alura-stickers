@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,37 +24,45 @@ public class LanguageController {
     private LanguageRepository repository;
 
     @GetMapping("/language/all")
-    public List<Language> getAll(){
-        return repository.findAll();  
+    public List<Language> getAllorderBy(@RequestParam(defaultValue = "") String orderBy) {
+        switch (orderBy) {
+            case "ASC":
+                return repository.findAllByOrderByRankingAsc();
+            case "DESC":
+                return repository.findAllByOrderByRankingDesc();
+            default:
+                return repository.findAll();
+        }
     }
 
     @PostMapping("/language")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Language registerLanguage(@RequestBody Language language){
+    public Language registerLanguage(@RequestBody Language language) {
         return repository.save(language);
     }
 
     @DeleteMapping("/language")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteLanguage(@RequestBody Map<String, String> data){
+    public void deleteLanguage(@RequestBody Map<String, String> data) {
         try {
             String id = data.get("id");
             repository.deleteById(id);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/language")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void editLanguage(@RequestBody Language language){
+    public void editLanguage(@RequestBody Language language) {
         try {
             String Id = language.getId();
             Optional<Language> old = repository.findById(Id);
-            if(repository.findById(Id).isEmpty()){
+            if (repository.findById(Id).isEmpty()) {
                 throw new Exception();
-            }else{
-                Language update = new Language(old.get().getId(), language.getTitle(), language.getImage());
+            } else {
+                Language update = new Language(old.get().getId(), language.getTitle(), language.getImage(),
+                        old.get().getRanking());
                 repository.save(update);
             }
         } catch (Exception e) {
