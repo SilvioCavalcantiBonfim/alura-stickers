@@ -1,5 +1,6 @@
 package com.example.imersaoAlura;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,15 +25,25 @@ public class LanguageController {
     private LanguageRepository repository;
 
     @GetMapping("/language/all")
-    public List<Language> getAllorderBy(@RequestParam(defaultValue = "") String orderBy) {
+    public List<Language> getAllorderBy(@RequestParam(defaultValue = "") String orderBy, @RequestParam(defaultValue = "0") int min, @RequestParam(defaultValue = "10000") int max) {
+        List<Language> listLanguage = new ArrayList<>();
+        List<Language> rt = new ArrayList<>();
         switch (orderBy) {
             case "ASC":
-                return repository.findAllByOrderByRankingAsc();
+                listLanguage = repository.findAllByOrderByRankingAsc();
+                break;
             case "DESC":
-                return repository.findAllByOrderByRankingDesc();
+                listLanguage = repository.findAllByOrderByRankingDesc();
+                break;
             default:
-                return repository.findAll();
+                listLanguage = repository.findAll();
+                break;
         }
+        for (Language l : listLanguage) {
+            if(l.getRanking() >= min && l.getRanking() <= max)
+                rt.add(l);
+        }
+        return rt;
     }
 
     @PostMapping("/language")
