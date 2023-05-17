@@ -1,5 +1,5 @@
 {
-    "project": "Asteroids",
-    "frameworks": ["createreactapp"],
-    "description": "Sistema em javascript baseado no jogo asteroids."
+    "project": "Alura Stickers",
+    "frameworks": ["springboot", "mongodb", "apachemaven"],
+    "description": "Projeto desenvolvido durante a imersão java da Alura."
 }
